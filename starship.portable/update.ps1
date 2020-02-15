@@ -13,7 +13,7 @@ function global:au_GetLatest {
 
     $table = @{
         Version      = $version
-        ReleaseNotes = $notes.Split("`n") | Select-Object -Skip 3
+        ReleaseNotes = $notes.Trim()
         PreRelease   = $prelease
         FileType     = 'zip'
     }
