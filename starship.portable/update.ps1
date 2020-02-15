@@ -72,4 +72,4 @@ function global:au_AfterUpdate {
     }
 }
 
-Update-Package -ChecksumFor none -NoCheckChocoVersion -NoCheckUrl -Force
+Update-Package -ChecksumFor none
