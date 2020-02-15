@@ -1,0 +1,7 @@
+﻿
+VERIFICATION
+Verification is intended to assist the Chocolatey moderators and community
+in verifying that this package's contents are trustworthy.
+
+https://github.com/starship/starship/releases/latest/download/starship-x86_64-pc-windows-msvc.zip.sha256
+121719346ea68ed11c0f58a75f785b7cbb8e0b4c9e5b2f59f8472251b13bc752

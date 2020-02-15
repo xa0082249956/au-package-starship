@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>starship.portable</id>
+    <version>0.36.0</version>
+    <packageSourceUrl>https://github.com/starship/starship/</packageSourceUrl>
+    <owners>meishin</owners>
+    <title>Starship</title>
+    <authors>Starship Contributors</authors>
+    <projectUrl>https://starship.rs</projectUrl>
+    <iconUrl>https://cdn.jsdelivr.net/gh/starship/starship/media/icon.png</iconUrl>
+    <copyright>2019, Starship Contributors</copyright>
+    <licenseUrl>https://github.com/starship/starship/raw/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectSourceUrl>https://github.com/starship/starship/</projectSourceUrl>
+    <docsUrl>https://starship.rs/</docsUrl>
+    <bugTrackerUrl>https://github.com/starship/starship/issues</bugTrackerUrl>
+    <tags>starship zsh-theme fish-theme zsh-prompt fish-prompt shell-prompt oh-my-zsh rust starship zsh powershell fish bash nerd-fonts</tags>
+    <summary>The minimal, blazing-fast, and infinitely customizable prompt for any shell!</summary>
+    <description>**The minimal, blazing-fast, and infinitely customizable prompt for any shell!**
+
+
+- **Fast:** it's fast – _really really_ fast! 🚀
+- **Customizable:** configure every aspect of your prompt.
+- **Universal:** works on any shell, on any operating system.
+- **Intelligent:** shows relevant information at a glance.
+- **Feature rich:** support for all your favorite tools.
+- **Easy:** quick to install – start using it in minutes.
+    </description>
+    <releaseNotes>[v0.36.0](https://github.com/starship/starship/compare/v0.35.1...v0.36.0) (2020-02-12)
+--------------------------------------------------------------------------------------
+
+### Bug Fixes
+
+-   Change command duration variable for Ion shell to CMD_DURATION ([#911](https://github.com/starship/starship/issues/911))
+
+### Build
+
+-   Remove media from cargo build
+-   deps: bump open from 1.3.3 to 1.3.4
+-   deps: bump os_info from 1.3.3 to 2.0.0
+-   deps: bump sysinfo from 0.11.0 to 0.11.1
+-   deps: bump serde_json from 1.0.46 to 1.0.47
+-   deps: bump sysinfo from 0.10.5 to 0.11.0
+-   deps: bump sysinfo from 0.11.1 to 0.11.2 ([#930](https://github.com/starship/starship/issues/930))
+
+### Chore
+
+-   Remove accidentally added binary
+-   give unused function a test annotation
+-   bump: v0.36.0
+-   bump: v0.35.1
+-   bump: v0.35.0
+
+### Code Refactoring
+
+-   Move ANSI escaping into its own functions ([#866](https://github.com/starship/starship/issues/866))
+
+### Docs
+
+-   Replace project tagline
+-   Update the link of the contributors badge
+-   rework the project README.md ([#931](https://github.com/starship/starship/issues/931))
+-   remove icons from badges
+-   use flat-square badges in README.md
+-   Make code blocks dark themed
+-   Fix Japanese sidebar links
+-   Use Algolia DocSearch for docs
+-   Update example snippets
+-   add m0nhawk as a contributor ([#912](https://github.com/starship/starship/issues/912))
+-   Update all-contributors
+-   i18n: Update translations ([#908](https://github.com/starship/starship/issues/908))
+
+### Features
+
+-   Add cabal and hpack detection for the haskell module ([#915](https://github.com/starship/starship/issues/915))
+-   Add an Elm module ([#879](https://github.com/starship/starship/issues/879))
+-   git_commit: Show the hash of commits when detached HEAD ([#738](https://github.com/starship/starship/issues/738))
+-   installer: Ask for permission escalation during installation, if needed ([#914](https://github.com/starship/starship/issues/914))
+
+### Revert
+
+-   "refactor: replace reqwest with ureq ([#844](https://github.com/starship/starship/issues/844))" ([#895](https://github.com/starship/starship/issues/895))
+
+### Test
+
+-   port Haskell module tests to integration test ([#913](https://github.com/starship/starship/issues/913))
+-   golang: refactor golang tests to use mocked command ([#925](https://github.com/starship/starship/issues/925))
+    </releaseNotes>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
