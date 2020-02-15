@@ -7,33 +7,40 @@ $releases = 'https://api.github.com/repos/starship/starship/releases/latest'
 
 function global:au_GetLatest {
     $download_json = Invoke-RestMethod $releases
-    $version = $download_json.tag_name
+    $version = $download_json.tag_name.Replace('v', '')
     $prelease = $download_json.prerelease
     $notes = $download_json.body
 
-    $url32 = ($download_json.assets | Where-Object name -Like '*x86-*windows*.zip').browser_download_url
-    $url64 = ($download_json.assets | Where-Object name -Like '*x86_64-*windows*.zip').browser_download_url
-    $urlsum32 = ($download_json.assets | Where-Object name -Like '*x86-*windows*.zip.sha256').browser_download_url
-    $urlsum64 = ($download_json.assets | Where-Object name -Like '*x86_64-*windows*.zip.sha256').browser_download_url
-
-    if ($urlsum32) {
-        $truesum32 = Invoke-RestMethod $urlsum32
-    }
-
-    if ($urlsum64) {
-        $truesum64 = Invoke-RestMethod $urlsum64
-    }
-    
     $table = @{
         Version      = $version
         ReleaseNotes = $notes.Split("`n") | Select-Object -Skip 3
-        URL32        = $url32
-        URL64        = $url64
-        TrueSum32    = $truesum32
-        TrueSum64    = $truesum64
-        FileType     = 'exe'
+        PreRelease   = $prelease
+        FileType     = 'zip'
     }
+
+    $url32 = ($download_json.assets | Where-Object name -Like '*x86-*windows*.zip').browser_download_url
+    $url64 = ($download_json.assets | Where-Object name -Like '*x86_64-*windows*.zip').browser_download_url
+
+    if ($url32) {
+        $urlsum32 = ($download_json.assets | Where-Object name -Like '*x86-*windows*.zip.sha256').browser_download_url
+        $truesum32 = Invoke-RestMethod $urlsum32
+        $table.Url32 = $url32
+        $table.TrueSum32 = $truesum32
+    }
+    
+    if ($url64) {
+        $urlsum64 = ($download_json.assets | Where-Object name -Like '*x86_64-*windows*.zip.sha256').browser_download_url
+        $truesum64 = Invoke-RestMethod $urlsum64
+        $table.Url64 = $url64
+        $table.TrueSum64 = $truesum64
+    }
+    
+    Write-Host "Got latest."
     return $table
+}
+
+function global:au_SearchReplace {
+    @{ }
 }
 
 function global:au_BeforeUpdate {
@@ -41,11 +48,23 @@ function global:au_BeforeUpdate {
 }
 
 function global:au_AfterUpdate {
-    if (
-        $Latest.Checksum32 -eq $Latest.TrueSum32 -and 
-        $Latest.Checksum64 -eq $Latest.TrueSum64
-    ) {
-        Write-Host "Checksum match."
+    Write-Host "Checksum32: "$Latest.Checksum32"."
+    Write-Host "Checksum64: "$Latest.Checksum64"."
+
+    if ($Latest.TrueSum32) {
+        if ($Latest.Checksum32.Trim() -like $Latest.TrueSum32.Trim()) {
+            Write-Host "x86 Checksum match." -ForegroundColor Green
+        } else {
+            throw 'x86 Checksum mismatch.'
+        }
+    }
+
+    if ($Latest.TrueSum64) {
+        if ($Latest.Checksum64.Trim() -like $Latest.TrueSum64.Trim()) {
+            Write-Host "x86_64 Checksum match." -ForegroundColor Green
+        } else {
+            throw 'x86_64 Checksum mismatch.'
+        }
     }
 
     Update-Metadata -data @{
@@ -53,4 +72,4 @@ function global:au_AfterUpdate {
     }
 }
 
-Update-Package -ChecksumFor none
+Update-Package -ChecksumFor none -NoCheckChocoVersion -NoCheckUrl -Force
