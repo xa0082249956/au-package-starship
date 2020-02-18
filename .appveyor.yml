@@ -47,14 +47,19 @@ install:
 build_script:
 - ps: |
     cd starship.portable
-    ./update.ps1
+    $options = @{}
+    if ($Env:APPVEYOR_REPO_COMMIT_MESSAGE -like '*nocheck*') {
+      $options['NoCheckChocoVersion'] = $true
+    }
+    ./update.ps1 $options
 - ps: |
     $pkg = (Get-Item starship.portable.*.nupkg).FullName
-    ls
-    $pkg
-    choco apikey -k $env:api_key -s https://push.chocolatey.org/
-    if (-not ($Env:APPVEYOR_REPO_COMMIT_MESSAGE -like 'nopush*')) {
-      choco push $pkg --source https://push.chocolatey.org/
+    if ($pkg)
+    {
+      choco apikey -k $env:api_key -s https://push.chocolatey.org/
+      if (-not ($Env:APPVEYOR_REPO_COMMIT_MESSAGE -like '*nopush*')) {
+        choco push $pkg --source https://push.chocolatey.org/
+      }
     }
 
 artifacts:
