@@ -1,3 +1,8 @@
+param(
+    [hashtable]
+    $Options
+)
+
 Import-Module AU
 Import-Module Wormies-AU-Helpers
 
@@ -72,4 +77,4 @@ function global:au_AfterUpdate {
     }
 }
 
-Update-Package -ChecksumFor none
+Update-Package @Options -ChecksumFor none 
